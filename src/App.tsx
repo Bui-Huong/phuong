@@ -1,7 +1,7 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
+import HomePage from './pages/HomePage';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -21,9 +21,9 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import AddExpense from './pages/AddExpense';
-import ListExpense from './pages/ListExpense';
-import DetailExpense from './pages/DetailExpense';
+import EnterExpensePage from './pages/EnterExpensePage';
+import ListExpensePage from './pages/ListExpensePage';
+import DetailExpensePage from './pages/DetailExpensePage';
 
 setupIonicReact();
 
@@ -31,24 +31,24 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
+        <Route exact path="/HomePage">
+          <HomePage />
         </Route>
 
         <Route exact path="/">
-          <Redirect to="/home" />
+          <Redirect to="/HomePage" />
         </Route>
 
-        <Route exact path="/addexpense">
-          <AddExpense />
+        <Route exact path="/EnterExpensePage">
+          <EnterExpensePage />
         </Route>
 
-        <Route exact path="/listexpense">
-          <ListExpense/>
+        <Route exact path="/ListExpensePage">
+          <ListExpensePage/>
         </Route>
 
-        <Route exact path="/detailexpense/:id">
-          <DetailExpense/>
+        <Route exact path="/DetailExpensePage/:id">
+          <DetailExpensePage/>
         </Route>
 
       </IonRouterOutlet>

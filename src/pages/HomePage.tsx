@@ -1,9 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
+import ExploreContainerComponents from '../components/ExploreContainerComponents';
 import 'ionicons/icons';
 
-const Home: React.FC = () => {
+const HomePage: React.FC = () => {
   return (
     
     <IonPage>
@@ -22,7 +21,7 @@ const Home: React.FC = () => {
           Enter trip information by clicking the button below.
           </IonCardContent>
           <IonCardContent>
-          <IonButton expand="block" fill="solid" color="tertiary" routerLink="/addexpense" onClick={() => navigator.vibrate(2500)}>Add new trips</IonButton>
+          <IonButton expand="block" fill="solid" color="tertiary" routerLink="/EnterExpensePage" onClick={() => navigator.vibrate(2500)}>Add new trips</IonButton>
           </IonCardContent>
         </IonCard>
 
@@ -35,7 +34,7 @@ const Home: React.FC = () => {
           View trip information by clicking the button below.
           </IonCardContent>
           <IonCardContent>
-          <IonButton expand="block" fill="solid" color="primary" routerLink="/listexpense" onClick={() => navigator.vibrate(2500)}>View trips</IonButton>
+          <IonButton expand="block" fill="solid" color="primary" routerLink="/ListExpensePage" onClick={() => navigator.vibrate(2500)}>View trips</IonButton>
           </IonCardContent>
         </IonCard>
       </IonContent>
@@ -43,4 +42,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default HomePage;

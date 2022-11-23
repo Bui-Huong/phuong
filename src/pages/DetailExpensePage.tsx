@@ -8,13 +8,13 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { MExpenseApp } from '../models';
-import { deleteMExpenseApp, getMExpenseAppById, updateMExpenseApp } from '../databaseHandler'
+import { removeMExpenseApp, showMExpenseAppById, reconditionMExpenseApp } from '../databaseHandler'
 
 interface IdParam {
     id: string
 }
 
-const DetailExpense: React.FC = () => {
+const DetailExpensePage: React.FC = () => {
     const [nameOfTrip, setnameOfTrip] = useState('')
     const [destinationForTrip, setdestinationForTrip] = useState('')
     const [dateOfTrip, setdateOfTrip] = useState(new Date().toISOString())
@@ -24,18 +24,18 @@ const DetailExpense: React.FC = () => {
     const { id } = useParams<IdParam>()
     const history = useHistory()
 
-    function formatVNDate(isoString: string) {
+    function formatVietNamDate(isoString: string) {
         return new Date(isoString).toLocaleDateString("vi-VN");
     }
 
-    async function deleteMExpenseAppHandler() {
+    async function removeMExpenseAppHandler() {
         
-        await deleteMExpenseApp(Number.parseInt(id));
+        await removeMExpenseApp(Number.parseInt(id));
         alert(id + "is deleted!");
         history.goBack();
     }
 
-    async function updateMExpenseAppHandler() {
+    async function reconditionMExpenseAppHandler() {
         if (!nameOfTrip || !destinationForTrip || !dateOfTrip || !riskOfAssessment || !descriptionForTrip /*||
             !expenseType || !expenseAmount || !expenseTime || !comment*/) {
             alert('Please enter all fields in RED color')
@@ -48,14 +48,14 @@ const DetailExpense: React.FC = () => {
             /*expenseType: expenseType, expenseAmount: expenseAmount,
             expenseTime: expenseTime, comment: comment*/
         }
-        await updateMExpenseApp(updateExpense)
-        alert('Update done!')
+        await reconditionMExpenseApp(updateExpense)
+        alert('Recondition done!')
         }
         
     }
 
-    async function fetchData() {
-        const resultFromDB = await getMExpenseAppById(Number.parseInt(id)) as MExpenseApp;
+    async function getData() {
+        const resultFromDB = await showMExpenseAppById(Number.parseInt(id)) as MExpenseApp;
         setnameOfTrip(resultFromDB.nameOfTrip);
         setdestinationForTrip(resultFromDB.destinationForTrip);
         setdateOfTrip(resultFromDB.dateOfTrip);
@@ -67,7 +67,7 @@ const DetailExpense: React.FC = () => {
         setComment(resultFromDB.comment);*/
     }
     useEffect(() => {
-        fetchData();
+        getData();
     }, [])
 
     return (
@@ -77,7 +77,7 @@ const DetailExpense: React.FC = () => {
                     <IonButtons slot="start">
                         <IonBackButton />
                     </IonButtons>
-                    <IonButton color="danger" slot="end" onClick={deleteMExpenseAppHandler}>
+                    <IonButton color="danger" slot="end" onClick={removeMExpenseAppHandler}>
                         <IonIcon slot="icon-only" icon={trash}></IonIcon>
                     </IonButton>
                     <IonTitle>Detail of {id}</IonTitle>
@@ -91,7 +91,7 @@ const DetailExpense: React.FC = () => {
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel color="danger">•	destinationForTrip:</IonLabel>
+                    <IonLabel color="danger">sDestination For Trip:</IonLabel>
                     <IonInput slot="end" value={destinationForTrip} onIonChange={e => setdestinationForTrip(e.detail.value!)}></IonInput>
                 </IonItem>
 
@@ -109,15 +109,15 @@ const DetailExpense: React.FC = () => {
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel color="danger">•	descriptionForTrip:</IonLabel>
+                    <IonLabel color="danger">•	Description For Trip:</IonLabel>
                     <IonTextarea placeholder="Enter more information here..." value={descriptionForTrip} onIonChange={e => setdescriptionForTrip(e.detail.value!)}></IonTextarea>
                 </IonItem>
 
                 
 
-                <IonButton expand="block" onClick={updateMExpenseAppHandler}>Update list</IonButton>
+                <IonButton expand="block" onClick={reconditionMExpenseAppHandler}>Update list</IonButton>
             </IonContent>
         </IonPage>
     );
 };
-export default DetailExpense;
+export default DetailExpensePage;

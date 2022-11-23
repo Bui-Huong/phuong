@@ -5,9 +5,9 @@ import {
 } from '@ionic/react';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { insertMExpenseApp, checkDuplicateBynameOfTrip } from '../databaseHandler'
+import { insertingMExpenseApp, checkingDuplicateBynameOfTrip } from '../databaseHandler'
 
-const AddExpense: React.FC = () => {
+const EnterExpensePage: React.FC = () => {
     const history = useHistory()
 
     const [nameOfTrip, setnameOfTrip] = useState('')
@@ -16,14 +16,14 @@ const AddExpense: React.FC = () => {
     const [riskOfAssessment, setriskOfAssessment] = useState('')
     const [descriptionForTrip, setdescriptionForTrip] = useState('')
 
-    function formatVNDate(isoString: string) {
+    function formatVietNamDate(isoString: string) {
         return new Date(isoString).toLocaleDateString("vi-VN");
     }
     async function addMExpenseAppHandler() {
         // add expense
 
         if (!nameOfTrip || !destinationForTrip || !dateOfTrip || !riskOfAssessment || !descriptionForTrip) {
-            alert('Please enter all fields in RED color')
+            alert('Please enter all fields in VIOLET color')
             return;
         } else {
             const newExpense = {
@@ -31,9 +31,9 @@ const AddExpense: React.FC = () => {
                 dateOfTrip: dateOfTrip, riskOfAssessment: riskOfAssessment,
                 descriptionForTrip: descriptionForTrip
             }
-            await insertMExpenseApp(newExpense);
+            await insertingMExpenseApp(newExpense);
             alert('Added ' + nameOfTrip + ' expanse!' );
-            await checkDuplicateBynameOfTrip()   
+            await checkingDuplicateBynameOfTrip()   
             history.goBack();
         }
 
@@ -45,7 +45,7 @@ const AddExpense: React.FC = () => {
                     <IonButtons slot="start">
                         <IonBackButton />
                     </IonButtons>
-                    <IonTitle><IonButton fill="clear" routerLink="/home">Add Expanse listings</IonButton></IonTitle>
+                    <IonTitle><IonButton fill="clear" routerLink="/HomePage">Add Expanse listings</IonButton></IonTitle>
                 </IonToolbar>
             </IonHeader>
 
@@ -53,22 +53,22 @@ const AddExpense: React.FC = () => {
             <IonContent className="ion-padding">
 
                 <IonItem>
-                    <IonLabel color="danger">Enter Trip's Name:</IonLabel>
+                    <IonLabel color="tertiary">Enter Trip's Name:</IonLabel>
                     <IonInput placeholder="Enter name here..." slot="end" onIonChange={e => setnameOfTrip(e.detail.value!)}></IonInput>
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel color="danger">destinationForTrip :</IonLabel>
+                    <IonLabel color="tertiary">Destination For Trip :</IonLabel>
                     <IonInput placeholder="Enter destinationForTrip here..." slot="end" onIonChange={e => setdestinationForTrip(e.detail.value!)}></IonInput>
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel color="danger">Date of Trip:</IonLabel>
+                    <IonLabel color="tertiary">Date of Trip:</IonLabel>
                     <IonDatetime value={dateOfTrip} onIonChange={e => setdateOfTrip(e.detail.value!.toString())}></IonDatetime>
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel color="danger">Requires risk assessment:</IonLabel>
+                    <IonLabel color="tertiary">Requires risk assessment:</IonLabel>
                     <IonSelect placeholder="Select One" onIonChange={e => setriskOfAssessment(e.detail.value)} >
                         <IonSelectOption value="Yes">Yes</IonSelectOption>
                         <IonSelectOption value="No">No</IonSelectOption>
@@ -76,14 +76,14 @@ const AddExpense: React.FC = () => {
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel color="medium">descriptionForTrip:</IonLabel>
+                    <IonLabel color="medium">Description For Trip:</IonLabel>
                     <IonTextarea placeholder="Enter more information here..." slot="end" onIonChange={e => setdescriptionForTrip(e.detail.value!)}></IonTextarea>
                 </IonItem>
                 
-                <IonButton expand="block" fill="solid" color="tertiary" routerLink="/addexpense" onClick={addMExpenseAppHandler}>Add</IonButton>
+                <IonButton expand="block" fill="solid" color="tertiary" routerLink="/EnterExpensePage" onClick={addMExpenseAppHandler}>Add</IonButton>
                 
             </IonContent>
         </IonPage>
     );
 };
-export default AddExpense;
+export default EnterExpensePage;

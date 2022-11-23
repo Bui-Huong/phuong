@@ -3,17 +3,17 @@ import { MExpenseApp } from './models';
 
 const database_name = 'MExpenseApp';
 
-initDB().then(() => {
+initDatabase().then(() => {
     console.log(database_name + " was created!")
 })
 
-export async function insertMExpenseApp(MExpenseApp: MExpenseApp) {
+export async function insertingMExpenseApp(MExpenseApp: MExpenseApp) {
     const db = await openDB(database_name, 1);
     await db.transaction("MExpenseApp", 'readwrite').objectStore("MExpenseApp").put(MExpenseApp);
 }
 
-export async function checkDuplicateBynameOfTrip() {
-    var tripArr = await getAllMExpenseApp() as any[] as MExpenseApp[]
+export async function checkingDuplicateBynameOfTrip() {
+    var tripArr = await showAllMExpenseApp() as any[] as MExpenseApp[]
     var check = [] as any[]
 
     check = tripArr.map(e => e.nameOfTrip).filter((item, index, final) => final.indexOf(item) !== index)
@@ -21,37 +21,37 @@ export async function checkDuplicateBynameOfTrip() {
     alert('Trip name was duplicated in ' + check)
 }
 
-export async function getAllMExpenseApp() {
+export async function showAllMExpenseApp() {
     const db = await openDB(database_name, 1);
     return await db.transaction("MExpenseApp").objectStore("MExpenseApp").getAll();
 }
 
-export async function searchBynameOfTrip(keyword: string) {
+export async function searchEngineBynameOfTrip(keyword: string) {
     const db = await openDB(database_name, 1);
     let cursor = await db.transaction('MExpenseApp').store.openCursor()
-    let searchResult = []
+    let searchEngineResult = []
     while (cursor) {
         if ((cursor.value as MExpenseApp).nameOfTrip >= keyword && (cursor.value as MExpenseApp).nameOfTrip <= keyword + '~') {
-            searchResult.push(cursor.value)
+            searchEngineResult.push(cursor.value)
         }
 
         cursor = await cursor.continue();
     }
-    return searchResult
+    return searchEngineResult
 }
 
 
-export async function getMExpenseAppById(id: number) {
+export async function showMExpenseAppById(id: number) {
     const db = await openDB(database_name, 1);
     return await db.get("MExpenseApp", id);
 }
 
-export async function deleteMExpenseApp(id: number) {
+export async function removeMExpenseApp(id: number) {
     const db = await openDB(database_name, 1);
     await db.delete('MExpenseApp', id)
 }
 
-export async function updateMExpenseApp(MExpenseApp: MExpenseApp) {
+export async function reconditionMExpenseApp(MExpenseApp: MExpenseApp) {
     const db = await openDB(database_name, 1);
     var MExpenseAppDB = await db.get("MExpenseApp", MExpenseApp.id!) as MExpenseApp;
 
@@ -64,7 +64,7 @@ export async function updateMExpenseApp(MExpenseApp: MExpenseApp) {
     await db.put("MExpenseApp", MExpenseAppDB);
 }
 
-async function initDB() {
+async function initDatabase() {
     const db = await openDB(database_name, 1, {
         upgrade(db) {
             const store = db.createObjectStore('MExpenseApp', {
