@@ -4,15 +4,15 @@ import {IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonInput,
     IonTitle, IonToolbar
 } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
-import { getAllMExpense, searchByTripName } from '../databaseHandler';
-import { MExpense } from '../models';
+import { getAllMExpenseApp, searchBynameOfTrip } from '../databaseHandler';
+import { MExpenseApp } from '../models';
 
 const ListExpense: React.FC = () => {
-    const [allExpense, setAllMExpense] = useState<MExpense[]>([]);
+    const [allExpense, setAllMExpenseApp] = useState<MExpenseApp[]>([]);
     async function fetchData() {
-        const resultFromDB = await getAllMExpense();
+        const resultFromDB = await getAllMExpenseApp();
 
-        setAllMExpense(resultFromDB);
+        setAllMExpenseApp(resultFromDB);
     }
 
     useEffect(() => {
@@ -28,9 +28,9 @@ const ListExpense: React.FC = () => {
     const [searchText, setSearchText] = useState<string>('');
     async function Search(word: string) {
         setSearchText(word)
-        const resultFromDB = await searchByTripName(word);
+        const resultFromDB = await searchBynameOfTrip(word);
 
-        setAllMExpense(resultFromDB);
+        setAllMExpenseApp(resultFromDB);
     }
     return (
         <IonPage>
@@ -56,7 +56,7 @@ const ListExpense: React.FC = () => {
                 {allExpense &&
                     <IonList >
                         {allExpense.map(c =>
-                            <IonItem color="light" routerLink={'/detailexpense/' + c.id} button key={c.id}>{c.tripName} expense in [{c.tripDate}]</IonItem>
+                            <IonItem color="light" routerLink={'/detailexpense/' + c.id} button key={c.id}>{c.nameOfTrip} expense in [{c.dateOfTrip}]</IonItem>
                         )}
                     </IonList>
                 }

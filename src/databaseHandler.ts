@@ -1,37 +1,37 @@
 import { openDB } from 'idb'
-import { MExpense } from './models';
+import { MExpenseApp } from './models';
 
-const database_name = 'MExpense';
+const database_name = 'MExpenseApp';
 
 initDB().then(() => {
     console.log(database_name + " was created!")
 })
 
-export async function insertMExpense(mexpense: MExpense) {
+export async function insertMExpenseApp(MExpenseApp: MExpenseApp) {
     const db = await openDB(database_name, 1);
-    await db.transaction("mExpense", 'readwrite').objectStore("mExpense").put(mexpense);
+    await db.transaction("MExpenseApp", 'readwrite').objectStore("MExpenseApp").put(MExpenseApp);
 }
 
-export async function checkDuplicateByTripName() {
-    var tripArr = await getAllMExpense() as any[] as MExpense[]
+export async function checkDuplicateBynameOfTrip() {
+    var tripArr = await getAllMExpenseApp() as any[] as MExpenseApp[]
     var check = [] as any[]
 
-    check = tripArr.map(e => e.tripName).filter((item, index, final) => final.indexOf(item) !== index)
+    check = tripArr.map(e => e.nameOfTrip).filter((item, index, final) => final.indexOf(item) !== index)
     console.log(check)
     alert('Trip name was duplicated in ' + check)
 }
 
-export async function getAllMExpense() {
+export async function getAllMExpenseApp() {
     const db = await openDB(database_name, 1);
-    return await db.transaction("mExpense").objectStore("mExpense").getAll();
+    return await db.transaction("MExpenseApp").objectStore("MExpenseApp").getAll();
 }
 
-export async function searchByTripName(keyword: string) {
+export async function searchBynameOfTrip(keyword: string) {
     const db = await openDB(database_name, 1);
-    let cursor = await db.transaction('mExpense').store.openCursor()
+    let cursor = await db.transaction('MExpenseApp').store.openCursor()
     let searchResult = []
     while (cursor) {
-        if ((cursor.value as MExpense).tripName >= keyword && (cursor.value as MExpense).tripName <= keyword + '~') {
+        if ((cursor.value as MExpenseApp).nameOfTrip >= keyword && (cursor.value as MExpenseApp).nameOfTrip <= keyword + '~') {
             searchResult.push(cursor.value)
         }
 
@@ -41,33 +41,33 @@ export async function searchByTripName(keyword: string) {
 }
 
 
-export async function getMExpenseById(id: number) {
+export async function getMExpenseAppById(id: number) {
     const db = await openDB(database_name, 1);
-    return await db.get("mExpense", id);
+    return await db.get("MExpenseApp", id);
 }
 
-export async function deleteMExpense(id: number) {
+export async function deleteMExpenseApp(id: number) {
     const db = await openDB(database_name, 1);
-    await db.delete('mExpense', id)
+    await db.delete('MExpenseApp', id)
 }
 
-export async function updateMExpense(mexpense: MExpense) {
+export async function updateMExpenseApp(MExpenseApp: MExpenseApp) {
     const db = await openDB(database_name, 1);
-    var MExpenseDB = await db.get("mExpense", mexpense.id!) as MExpense;
+    var MExpenseAppDB = await db.get("MExpenseApp", MExpenseApp.id!) as MExpenseApp;
 
-    MExpenseDB.tripName = mexpense.tripName
-    MExpenseDB.destination = mexpense.destination
-    MExpenseDB.tripDate = mexpense.tripDate
-    MExpenseDB.riskAssessment = mexpense.riskAssessment
-    MExpenseDB.description = mexpense.description
+    MExpenseAppDB.nameOfTrip = MExpenseApp.nameOfTrip
+    MExpenseAppDB.destinationForTrip = MExpenseApp.destinationForTrip
+    MExpenseAppDB.dateOfTrip = MExpenseApp.dateOfTrip
+    MExpenseAppDB.riskOfAssessment = MExpenseApp.riskOfAssessment
+    MExpenseAppDB.descriptionForTrip = MExpenseApp.descriptionForTrip
 
-    await db.put("mExpense", MExpenseDB);
+    await db.put("MExpenseApp", MExpenseAppDB);
 }
 
 async function initDB() {
     const db = await openDB(database_name, 1, {
         upgrade(db) {
-            const store = db.createObjectStore('mExpense', {
+            const store = db.createObjectStore('MExpenseApp', {
                 keyPath: 'id',
                 autoIncrement: true
             })

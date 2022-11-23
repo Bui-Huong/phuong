@@ -1,8 +1,8 @@
-export interface MExpense {
+export interface MExpenseApp {
     id? : number,
-    tripName: string,
-    destination: string,
-    tripDate: string,
-    riskAssessment: string,
-    description: string,
+    nameOfTrip: string,
+    destinationForTrip: string,
+    dateOfTrip: string,
+    riskOfAssessment: string,
+    descriptionForTrip: string,
 }

@@ -1,5 +1,5 @@
 {
-  "name": "MExpense",
+  "name": "MExpenseApp",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -68,5 +68,5 @@
   "devDependencies": {
     "@capacitor/cli": "4.4.0"
   },
-  "description": "An Ionic project"
+  "descriptionForTrip": "An Ionic project"
 }

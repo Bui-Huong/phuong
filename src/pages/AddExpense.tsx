@@ -5,35 +5,35 @@ import {
 } from '@ionic/react';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { insertMExpense, checkDuplicateByTripName } from '../databaseHandler'
+import { insertMExpenseApp, checkDuplicateBynameOfTrip } from '../databaseHandler'
 
 const AddExpense: React.FC = () => {
     const history = useHistory()
 
-    const [tripName, setTripName] = useState('')
-    const [destination, setDestination] = useState('')
-    const [tripDate, setTripDate] = useState<string | null>(null)
-    const [riskAssessment, setRiskAssessment] = useState('')
-    const [description, setDescription] = useState('')
+    const [nameOfTrip, setnameOfTrip] = useState('')
+    const [destinationForTrip, setdestinationForTrip] = useState('')
+    const [dateOfTrip, setdateOfTrip] = useState<string | null>(null)
+    const [riskOfAssessment, setriskOfAssessment] = useState('')
+    const [descriptionForTrip, setdescriptionForTrip] = useState('')
 
     function formatVNDate(isoString: string) {
         return new Date(isoString).toLocaleDateString("vi-VN");
     }
-    async function addMExpenseHandler() {
+    async function addMExpenseAppHandler() {
         // add expense
 
-        if (!tripName || !destination || !tripDate || !riskAssessment || !description) {
+        if (!nameOfTrip || !destinationForTrip || !dateOfTrip || !riskOfAssessment || !descriptionForTrip) {
             alert('Please enter all fields in RED color')
             return;
         } else {
             const newExpense = {
-                tripName: tripName, destination: destination,
-                tripDate: tripDate, riskAssessment: riskAssessment,
-                description: description
+                nameOfTrip: nameOfTrip, destinationForTrip: destinationForTrip,
+                dateOfTrip: dateOfTrip, riskOfAssessment: riskOfAssessment,
+                descriptionForTrip: descriptionForTrip
             }
-            await insertMExpense(newExpense);
-            alert('Added ' + tripName + ' expanse!' );
-            await checkDuplicateByTripName()   
+            await insertMExpenseApp(newExpense);
+            alert('Added ' + nameOfTrip + ' expanse!' );
+            await checkDuplicateBynameOfTrip()   
             history.goBack();
         }
 
@@ -54,33 +54,33 @@ const AddExpense: React.FC = () => {
 
                 <IonItem>
                     <IonLabel color="danger">Enter Trip's Name:</IonLabel>
-                    <IonInput placeholder="Enter name here..." slot="end" onIonChange={e => setTripName(e.detail.value!)}></IonInput>
+                    <IonInput placeholder="Enter name here..." slot="end" onIonChange={e => setnameOfTrip(e.detail.value!)}></IonInput>
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel color="danger">Destination :</IonLabel>
-                    <IonInput placeholder="Enter destination here..." slot="end" onIonChange={e => setDestination(e.detail.value!)}></IonInput>
+                    <IonLabel color="danger">destinationForTrip :</IonLabel>
+                    <IonInput placeholder="Enter destinationForTrip here..." slot="end" onIonChange={e => setdestinationForTrip(e.detail.value!)}></IonInput>
                 </IonItem>
 
                 <IonItem>
                     <IonLabel color="danger">Date of Trip:</IonLabel>
-                    <IonDatetime value={tripDate} onIonChange={e => setTripDate(e.detail.value!.toString())}></IonDatetime>
+                    <IonDatetime value={dateOfTrip} onIonChange={e => setdateOfTrip(e.detail.value!.toString())}></IonDatetime>
                 </IonItem>
 
                 <IonItem>
                     <IonLabel color="danger">Requires risk assessment:</IonLabel>
-                    <IonSelect placeholder="Select One" onIonChange={e => setRiskAssessment(e.detail.value)} >
+                    <IonSelect placeholder="Select One" onIonChange={e => setriskOfAssessment(e.detail.value)} >
                         <IonSelectOption value="Yes">Yes</IonSelectOption>
                         <IonSelectOption value="No">No</IonSelectOption>
                     </IonSelect>
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel color="medium">Description:</IonLabel>
-                    <IonTextarea placeholder="Enter more information here..." slot="end" onIonChange={e => setDescription(e.detail.value!)}></IonTextarea>
+                    <IonLabel color="medium">descriptionForTrip:</IonLabel>
+                    <IonTextarea placeholder="Enter more information here..." slot="end" onIonChange={e => setdescriptionForTrip(e.detail.value!)}></IonTextarea>
                 </IonItem>
                 
-                <IonButton expand="block" fill="solid" color="tertiary" routerLink="/addexpense" onClick={addMExpenseHandler}>Add</IonButton>
+                <IonButton expand="block" fill="solid" color="tertiary" routerLink="/addexpense" onClick={addMExpenseAppHandler}>Add</IonButton>
                 
             </IonContent>
         </IonPage>
