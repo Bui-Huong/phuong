@@ -1,0 +1,19 @@
+<IonItem>
+                    <IonLabel color="danger">Expense Type:</IonLabel>
+                    <IonInput slot="end" value={expenseType} onIonChange={e => setExpenseType(e.detail.value!)}></IonInput>
+                </IonItem>
+
+                <IonItem>
+                    <IonLabel color="danger">Expense Amount:</IonLabel>
+                    <IonInput slot="end" value={expenseAmount} onIonChange={e => setExpenseAmount(e.detail.value!)}></IonInput>
+                </IonItem>
+                
+                <IonItem>
+                    <IonLabel color="danger">Expense Time:</IonLabel>
+                    <IonDatetime value={expenseTime} onIonChange={e => setExpenseTime(e.detail.value!.toString())}></IonDatetime>
+                </IonItem>
+
+                <IonItem>
+                    <IonLabel>Comment:</IonLabel>
+                    <IonTextarea placeholder="Enter more information here..." value={comment} onIonChange={e => setComment(e.detail.value!)}></IonTextarea>
+                </IonItem>

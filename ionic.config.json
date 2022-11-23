@@ -1,0 +1,7 @@
+{
+  "name": "MExpense",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
